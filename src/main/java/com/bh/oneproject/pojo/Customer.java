@@ -14,8 +14,17 @@ public class Customer {
     private String cellphone;       //电话
     private String email;           //邮箱
     private String description;     //描述
+    private String ebable;          //数据的显隐
     public Customer(){}
-    public Customer(String cid, String cname, String gender, Date birthday, String cellphone, String email, String description) {
+
+    public Customer(String cname, String gender, String cellphone, String email) {
+        this.cname = cname;
+        this.gender = gender;
+        this.cellphone = cellphone;
+        this.email = email;
+    }
+
+    public Customer(String cid, String cname, String gender, Date birthday, String cellphone, String email, String description, String ebable) {
         this.cid = cid;
         this.cname = cname;
         this.gender = gender;
@@ -23,6 +32,7 @@ public class Customer {
         this.cellphone = cellphone;
         this.email = email;
         this.description = description;
+        this.ebable = ebable;
     }
 
     public String getCid() {
@@ -79,5 +89,13 @@ public class Customer {
 
     public void setDescription(String description) {
         this.description = description;
+    }
+
+    public String getEbable() {
+        return ebable;
+    }
+
+    public void setEbable(String ebable) {
+        this.ebable = ebable;
     }
 }

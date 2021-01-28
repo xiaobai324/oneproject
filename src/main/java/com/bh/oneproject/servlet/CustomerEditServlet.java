@@ -18,17 +18,12 @@ import java.util.Date;
 
 /**
  * @Author:JL
- * @Date:2021/1/27
+ * @Date:2021/1/28
  */
-@WebServlet(name="CustomerServlet",urlPatterns="/CustomerServlet")
-public class CustomerServlet extends HttpServlet {
+@WebServlet(name="CustomerEdit",urlPatterns="/editServlet")
+public class CustomerEditServlet extends HttpServlet {
     //@Autowired
     CustomerService customerService = new CustomerService();
-    @Override
-    protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        doGet(req,resp);
-    }
-
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 
@@ -54,18 +49,21 @@ public class CustomerServlet extends HttpServlet {
         String description = req.getParameter("description");
         String ebable = req.getParameter("ebable");
         //Date date = new Date();
-        String id = JdbcUtils.getId();
-        Customer crms = new Customer(id,cname,gender,date1,cellphone,email,description,ebable);
-        int add = customerService.add(crms);
+        //String id = JdbcUtils.getId();
+        String id = req.getParameter("id");
+        Customer customer = new Customer(id,cname,gender,date1,cellphone,email,description,ebable);
+        int row = customerService.editCustomer(customer);
         ServletContext servletContext = this.getServletContext();
 
-        if(1 == add){
-            servletContext.setAttribute("msg","添加成功");
+        if(1 == row){
+            servletContext.setAttribute("msg","修改成功");
             resp.sendRedirect("msg.jsp");
             return;
         }else {
-            servletContext.setAttribute("msg","添加失败");
+            servletContext.setAttribute("msg","修改失败");
+            resp.sendRedirect("msg.jsp");
+            return;
         }
-        //resp.sendRedirect("msg.jsp");
+
     }
 }

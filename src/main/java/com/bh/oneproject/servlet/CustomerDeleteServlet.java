@@ -2,7 +2,6 @@ package com.bh.oneproject.servlet;
 
 import com.bh.oneproject.pojo.Customer;
 import com.bh.oneproject.service.CustomerService;
-import org.springframework.beans.factory.annotation.Autowired;
 
 import javax.servlet.ServletContext;
 import javax.servlet.ServletException;
@@ -11,25 +10,31 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
-import java.util.List;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 
 /**
  * @Author:JL
- * @Date:2021/1/27
+ * @Date:2021/1/28
  */
-@WebServlet(name="CustomerQueryServlet",urlPatterns="/CustomerQueryServlet")
-public class CustomerQueryServlet extends HttpServlet {
-    //@Autowired
+@WebServlet(name="CustomerDeleteServlet",urlPatterns="/deleteServlet")
+public class CustomerDeleteServlet extends HttpServlet {
     CustomerService customerService = new CustomerService();
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        List  list = customerService.query();
 
-        req.setAttribute("list", list);
-        req.getRequestDispatcher("list.jsp").forward(req, resp);
-    }
+        String id = req.getParameter("cid");
 
-    @Override
-    protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+        int i = customerService.deleteCustomer(id);
+
+        if(1 == i){
+            req.setAttribute("msg","删除成功");
+        }else {
+            req.setAttribute("msg","删除失败");
+        }
+
+        req.getRequestDispatcher("msg.jsp").forward(req,resp);
+
     }
 }
