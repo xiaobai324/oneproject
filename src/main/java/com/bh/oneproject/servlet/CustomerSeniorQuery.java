@@ -17,6 +17,12 @@ import java.util.List;
  */
 @WebServlet(name="CustomerSeniorQuery",urlPatterns="/seniorQuery")
 public class CustomerSeniorQuery extends HttpServlet {
+    /**
+     * 封装对象
+     * 调用方法
+     * 保存查询结果在req域
+     * 跳转页面
+     */
     CustomerService customerService = new CustomerService();
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
