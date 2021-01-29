@@ -26,9 +26,9 @@ public class CustomerDeleteServlet extends HttpServlet {
 
         String id = req.getParameter("cid");
 
-        int i = customerService.deleteCustomer(id);
+        int row = customerService.deleteCustomer(id);
 
-        if(1 == i){
+        if(1 == row){
             req.setAttribute("msg","删除成功");
         }else {
             req.setAttribute("msg","删除失败");
