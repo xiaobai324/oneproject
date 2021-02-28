@@ -5,6 +5,7 @@ import com.bh.oneproject.utils.JdbcUtils;
 import org.apache.commons.dbutils.QueryRunner;
 import org.apache.commons.dbutils.handlers.BeanHandler;
 import org.apache.commons.dbutils.handlers.BeanListHandler;
+import org.apache.commons.dbutils.handlers.ScalarHandler;
 
 import javax.sql.DataSource;
 import java.sql.SQLException;
@@ -66,6 +67,7 @@ public class CustomerDao {
             list= qr.query(sql,new BeanHandler<>(Customer.class),id);
         } catch (SQLException e) {
             e.printStackTrace();
+
         }
         return list;
     }
@@ -114,6 +116,76 @@ public class CustomerDao {
             e.printStackTrace();
         }
 
+        return list;
+    }
+    //根据条件查询用户2
+    public List seniorQuery0(Customer c){
+        StringBuffer sql = new StringBuffer("select * from tb_customer where 1==1");
+        //设置参数值
+        List<Object> objects = new ArrayList<>();
+        String cname = c.getCname();
+        //判断条件
+        if(cname != null && !cname.trim().isEmpty()){
+            //若不为空
+            //1、sql后拼接and cname =?
+            sql.append(" and cname like ?");
+            //2、参数保存
+            objects.add(cname);
+        }
+        String gender = c.getGender();
+        if (gender != null && !gender.trim().isEmpty()){
+            //若不为空
+            //1、sql后拼接and gender =?
+            sql.append(" and gender = ?");
+            //2、参数保存
+            objects.add(gender);
+        }
+        String cellphone = c.getCellphone();
+        if (cellphone != null && !cellphone.trim().isEmpty()){
+            //若不为空
+            //1、sql后拼接and cellphone =?
+            sql.append(" and cellphone like ?");
+            //list.add("%" + cellphone +"%");
+            //2、参数保存
+            objects.add(cellphone);
+        }
+        String email = c.getEmail();
+        if(email != null && !email.trim().isEmpty()){
+            //若不为空
+            //1.sql后拼接and email =?
+            sql.append(" and email like ?");
+            //list.add("%" + email +"%");
+            //2、参数保存
+            objects.add(email);
+        }
+        try {
+            return  qr.query(sql.toString(),new BeanListHandler<>(Customer.class),objects);
+        } catch (SQLException e) {
+            throw new RuntimeException();
+        }
+    }
+    //获取数据总行数
+    public Object getAlleRows(){
+        String sql = "select count(*) from tb_customer";
+
+        int row =0;
+        try {
+            return qr.query(sql, new ScalarHandler<Object>());
+        } catch (SQLException e) {
+           throw new RuntimeException();
+        }
+
+    }
+    //查询，分页显示，一页显示pageSize行
+    public List queryPage(int pageNo,int pageSize){
+        List list = null;
+        String sql = "select * from tb_customer where ebable = 0 limit ?,?";
+        Object[] objects = {(pageNo-1)*pageSize,pageSize};
+        try {
+            list = qr.query(sql,new BeanListHandler<>(Customer.class),objects);
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
         return list;
     }
 }

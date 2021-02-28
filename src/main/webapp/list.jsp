@@ -20,6 +20,26 @@
   </head>
   
   <body>
+
+
+  <a href="/PageServlet?pageNo=1">首页</a>
+  <%--${pageNo > 1?'<a href="/PageServlet?pageNo=${pageNo-1}">上一页</a>':""}--%>
+
+  <c:if test="${pageNo>1}">
+	  <a href="/PageServlet?pageNo=${pageNo-1}">上一页</a>
+  </c:if>
+  <a href="/PageServlet?pageNo=${pageNo}">${pageNo}</a>
+  <a href="/PageServlet?pageNo=${pageNo+1}">${pageNo+1}</a>
+  <a href="/PageServlet?pageNo=${pageNo+2}">${pageNo+2}</a>
+  <a href="/PageServlet?pageNo=${pageNo+3}">${pageNo+3}</a>
+  <a href="/PageServlet?pageNo=${pageNo+4}">${pageNo+4}</a>
+  <a href="/PageServlet?pageNo=${pageNo+5}">${pageNo+5}</a>
+  <c:if test="${pageNo<pageCount}">
+	  <a href="/PageServlet?pageNo=${pageNo+1}">下一页</a>
+  </c:if>
+  <a href="/PageServlet?pageNo=${pageCount}">尾页</a>
+  共${pageCount}页
+  这是第${pageNo}页
 <h3 align="center">客户列表</h3>
 <table border="1" width="70%" align="center">
 	<tr>
@@ -47,6 +67,7 @@
 		</tr>
 	</c:forEach>
 
+
 	<%--<tr>
 		<td>张三</td>
 		<td>男</td>
@@ -72,5 +93,19 @@
 		</td>
 	</tr>--%>
 </table>
+
+<%--<%
+	if(pageNo > 1){
+%>
+<a href="/PageServlet?pageNo=<%=pageNo-1 %>">上一页</a>
+<%
+	}
+	if(pageNo < pageCount){
+%>
+<a href="/PageServlet?pageNo=<%=pageNo+1 %>">下一页</a>
+<a href="/PageServlet?pageCount=<%=pageCount %>">总页数</a>
+<%
+	}
+%>--%>
   </body>
 </html>

@@ -20,7 +20,7 @@ public class CustomerService {
         return rows;
     }
     //查询所有客户
-    public List  query(){
+    public List  query_(){
         List list = customerDao.queryCustomer();
         return list;
     }
@@ -44,4 +44,31 @@ public class CustomerService {
         List list = customerDao.seniorQuery(c);
         return list;
     }
+    //查询所有行数
+    public Object getRows(){
+       return customerDao.getAlleRows();
+    }
+    //设置行数
+    public List getCustomerById(int pageNo){
+        int pageSize = 10;
+        return this.getCustomerByPage(pageNo, pageSize);
+    }
+    //设置每页显示的行数
+    public List getCustomerByPage(int pageNo,int pageSize){
+        return customerDao.queryPage(pageNo,pageSize);
+    }
+   /* //可以在页面调整每页显示的行数
+    public List<CartoonType> getCartoonTypeByPage(int pageNo,int pageSize){
+        CartoonTypeDAO ctDao = new CartoonTypeDAO();
+        List<CartoonType> list = ctDao.query(pageNo, pageSize);
+        return list;
+    }
+
+    //页面上没有设置每页显示的行数
+    public List<CartoonType> getCartoonTypeById(int pageNo){
+        int pageSize = 5;
+        return this.getCartoonTypeByPage(pageNo, pageSize);
+    }
+
+   */
 }

@@ -23,10 +23,10 @@ public class CustomerQueryServlet extends HttpServlet {
     CustomerService customerService = new CustomerService();
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        List  list = customerService.query();
+        List  list = customerService.query_();
 
         req.setAttribute("list", list);
-        req.getRequestDispatcher("list.jsp").forward(req, resp);
+        req.getRequestDispatcher("/PageServlet").forward(req, resp);
     }
 
     @Override
